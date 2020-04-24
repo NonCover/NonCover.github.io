@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://noncover.github.io/"/>
-  <updated>2020-04-24T09:24:05.413Z</updated>
+  <updated>2020-04-24T13:34:06.334Z</updated>
   <id>https://noncover.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>不正式的文章</title>
+    <link href="https://noncover.github.io/2020/04/24/%E4%B8%8D%E6%AD%A3%E5%BC%8F%E7%9A%84%E6%96%87%E7%AB%A0/"/>
+    <id>https://noncover.github.io/2020/04/24/%E4%B8%8D%E6%AD%A3%E5%BC%8F%E7%9A%84%E6%96%87%E7%AB%A0/</id>
+    <published>2020-04-24T13:18:10.000Z</published>
+    <updated>2020-04-24T13:34:06.334Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="虽然没啥人看"><a href="#虽然没啥人看" class="headerlink" title="虽然没啥人看"></a>虽然没啥人看</h1><h1 id="关于blog"><a href="#关于blog" class="headerlink" title="关于blog"></a>关于blog</h1><ol><li>学习</li><li>记代码</li><li>偶尔写点算法题</li><li>装逼</li><li>来电色图</li></ol><h1 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h1><ol><li>垃圾大学</li><li>程序员（个人比较偏后端（<strong>java、python</strong>）开发）</li></ol><h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>本人的其他网站（由于懒得维护，就放在哪了） -》》》》》 <a href="http://lock2016.xyz" target="_blank" rel="noopener" title="这儿">这儿</a></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;虽然没啥人看&quot;&gt;&lt;a href=&quot;#虽然没啥人看&quot; class=&quot;headerlink&quot; title=&quot;虽然没啥人看&quot;&gt;&lt;/a&gt;虽然没啥人看&lt;/h1&gt;&lt;h1 id=&quot;关于blog&quot;&gt;&lt;a href=&quot;#关于blog&quot; class=&quot;headerlink&quot; titl
+      
+    
+    </summary>
+    
+    
+      <category term="随便写点" scheme="https://NonCover.github.io/categories/%E9%9A%8F%E4%BE%BF%E5%86%99%E7%82%B9/"/>
+    
+    
+      <category term="一些话" scheme="https://NonCover.github.io/tags/%E4%B8%80%E4%BA%9B%E8%AF%9D/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
