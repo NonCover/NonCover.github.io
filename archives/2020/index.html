@@ -6,13 +6,13 @@
     
     
     
-    <title>归档: 2020 | Hexo</title>
+    <title>归档: 2020 | noc的手记 | hello world</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     
     <meta name="theme-color" content="#77AAFF">
     
     
-    <meta name="keywords" content="">
+    <meta name="keywords" content="技术,生活,it,学习,推理">
     
     
 
@@ -39,13 +39,21 @@
 
 
     
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+    <meta name="description" content="记录在学习道路上以及生活上的一些收获">
+<meta property="og:type" content="website">
+<meta property="og:title" content="noc的手记">
+<meta property="og:url" content="http://lock2016.xyz/archives/2020/index.html">
+<meta property="og:site_name" content="noc的手记">
+<meta property="og:description" content="记录在学习道路上以及生活上的一些收获">
+<meta property="article:author" content="NonCover">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="生活">
+<meta property="article:tag" content="it">
+<meta property="article:tag" content="学习">
+<meta property="article:tag" content="推理">
 <meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="noc的手记" href="/atom.xml">
     
     <link rel="shortcut icon" href="/img/favicon.ico">
     <link id="style" rel="stylesheet" href="/css/style.css?v=3.0">
@@ -69,9 +77,9 @@
           <img src="/img/avatar.jpg" alt="avatar">
         </a>
         <hgroup class="introduce">
-          <h5 class="nickname" id="name">John Doe</h5>
+          <h5 class="nickname" id="name">NonCover</h5>
           
-            <div id="yiyanmotto" class="motto">&nbsp;</div>
+            <div id="mymotto" class="motto"></div>
           
         </hgroup>
       </div>
@@ -116,16 +124,16 @@
             
       <div class="nav2">
           
-              <a class="nav2item" data-title="Email" href="mailto:1755811882@qq.com" target="_parent"title="Email" >
+              <a class="nav2item" data-title="Email" href="mailto:3471949741@qq.com" target="_parent"title="Email" >
                 <i class="icon icon-lg icon-envelope-o envelope-o"></i>
               </a>
           
-              <a class="nav2item" data-title="Github" href="https://github.com/tomotoes" target="_blank"title="Github" >
+              <a class="nav2item" data-title="Github" href="https://github.com/NonCover" target="_blank"title="Github" >
                 <i class="icon icon-lg icon-github github"></i>
               </a>
           
-              <a class="nav2item" data-title="微博" href="https://weibo.com/u/6179399347" target="_blank"title="微博" >
-                <i class="icon icon-lg icon-weibo weibo"></i>
+              <a class="nav2item" data-title="web" href="http://lock2016.xyz" target="_blank"title="web" >
+                <i class="icon icon-lg icon-Web Web"></i>
               </a>
           
 
@@ -172,7 +180,7 @@
             </h1>
             <h5 class="subtitle">
                 
-                    <h1 class="archivestitle">路漫漫其修远兮</h1>
+                    <h1 class="archivestitle">你不能去教别人 只能帮助他自悟而已</h1>
                 
             </h5>
         </div>
@@ -228,9 +236,9 @@
     <div class="footer-content">
         <span class="power">
             <i class="icon icon-lg icon-copyright"></i>
-            2017
+            2016
             <i class="icon icon-lg icon-heart"></i>
-            <a href="http://yoursite.com">tomotoes.com</a>
+            <a href="http://lock2016.xyz">lock2016</a>
             <br/>
             Power by
             <a href="https://hexo.io/" target="_blank" rel="external nofollow">Hexo</a>&nbsp;·&nbsp;
@@ -356,7 +364,7 @@ $("#name").bumpyText();
 
 /* 网站运行时间 */
 setInterval(function () {
-	setTime("2017/10/11");
+	setTime("2020/4/24");
 }, 1000);
 
 /* 文章块的淡出 */
@@ -364,12 +372,17 @@ postshow();
 
 /* 座右铭 */
 
-   getHitokoto();
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: ""
+    });
 
 
 
 /* 粘贴提示 */
-G($(".post-content"), location.href, "John Doe");
+G($(".post-content"), location.href, "NonCover");
 
 
 /* 控制台 */
