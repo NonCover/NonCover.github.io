@@ -3,11 +3,11 @@
   <title>noc的手记</title>
   
   <subtitle>hello world</subtitle>
-  <link href="/atom.xml" rel="self"/>
+  <link href="/NonCover.github.io/atom.xml" rel="self"/>
   
-  <link href="http://lock2016.xyz/"/>
+  <link href="https://noncover.github.io/"/>
   <updated>2020-04-24T09:24:05.413Z</updated>
-  <id>http://lock2016.xyz/</id>
+  <id>https://noncover.github.io/</id>
   
   <author>
     <name>NonCover</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://lock2016.xyz/2020/04/24/hello-world/"/>
-    <id>http://lock2016.xyz/2020/04/24/hello-world/</id>
+    <link href="https://noncover.github.io/2020/04/24/hello-world/"/>
+    <id>https://noncover.github.io/2020/04/24/hello-world/</id>
     <published>2020-04-24T09:24:05.413Z</published>
     <updated>2020-04-24T09:24:05.413Z</updated>
     
