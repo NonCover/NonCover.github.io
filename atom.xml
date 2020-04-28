@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://noncover.github.io/"/>
-  <updated>2020-04-27T12:26:15.233Z</updated>
+  <updated>2020-04-28T12:15:24.051Z</updated>
   <id>https://noncover.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>桶排序</title>
+    <link href="https://noncover.github.io/2020/04/28/%E6%A1%B6%E6%8E%92%E5%BA%8F/"/>
+    <id>https://noncover.github.io/2020/04/28/%E6%A1%B6%E6%8E%92%E5%BA%8F/</id>
+    <published>2020-04-28T12:09:15.000Z</published>
+    <updated>2020-04-28T12:15:24.051Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="桶排序最简单最快的排序方法"><a href="#桶排序最简单最快的排序方法" class="headerlink" title="桶排序最简单最快的排序方法"></a>桶排序最简单最快的排序方法</h2><h2 id="假定有五个人，他们身上分别由，-5，-3，-1，-5，-7元钱，那么我们如何将这五个从小到大来排序？"><a href="#假定有五个人，他们身上分别由，-5，-3，-1，-5，-7元钱，那么我们如何将这五个从小到大来排序？" class="headerlink" title="假定有五个人，他们身上分别由， 5， 3， 1， 5， 7元钱，那么我们如何将这五个从小到大来排序？"></a>假定有五个人，他们身上分别由， 5， 3， 1， 5， 7元钱，那么我们如何将这五个从小到大来排序？</h2><h2 id="没错，我们要实现这个算法就要用到最简单，最快的一种排序方式——计数排序，所用到的算法思想来自于桶排序"><a href="#没错，我们要实现这个算法就要用到最简单，最快的一种排序方式——计数排序，所用到的算法思想来自于桶排序" class="headerlink" title="没错，我们要实现这个算法就要用到最简单，最快的一种排序方式——计数排序，所用到的算法思想来自于桶排序"></a>没错，我们要实现这个算法就要用到最简单，最快的一种排序方式——计数排序，所用到的算法思想来自于桶排序</h2><p>核心思想就离不开这个桶字。</p><p>假设我们面前有10个桶，我们可以把它看作一个内存空间为10的数组</p><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int arrs[10]; // 代表10个桶</span><br></pre></td></tr></tbody></table></figure><p>我们将这10个桶编号从 a[0] –&gt; a[9]，并且从一开始这10个桶里什么东西都没有，视为0</p><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 初始化数组为0</span><br><span class="line">for (int i = 0; i &lt;= 10; i++)</span><br><span class="line">{</span><br><span class="line">    a[i] = 0; </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p><img src="http://wiki.jikexueyuan.com/project/easy-learn-algorithm/images/1.8.png" alt="img"></p><p>网络图片</p><p>然后，我们依次读取这五个人身上所带的钱。</p><p>有5元钱的，桶编号为5记录一次，</p><p>带3元钱的，编号为3的痛记录一次，</p><p>由于有两个人带了5元钱，所以记录两次。</p><p>依次对这五个人进行记录</p><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int[] people = {5, 4, 1, 5, 7};</span><br><span class="line">for (auto i : people)</span><br><span class="line">{</span><br><span class="line">arrs[i]++;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>记录完后，我们需要将这五个人带的钱的多少从大到小打印出来</p><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for (int i = 0; i &lt;= 10; i++)</span><br><span class="line">{</span><br><span class="line">    while(arrs[i]!=0) </span><br><span class="line">    {</span><br><span class="line">        cout &lt;&lt; i &lt;&lt; " ";</span><br><span class="line">        arrs[i]--;  // 输出完后减一</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>这样就会打印出 这五个人从小到大排序后的值。</p><p>完整代码如下:</p><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">{</span><br><span class="line">    int people[5] = {5, 3, 1, 5, 7};</span><br><span class="line">    int buckets[10];    // 定义桶</span><br><span class="line">    for (int i = 0; i &lt;= 10; i++) </span><br><span class="line">    { //1. 初始化桶</span><br><span class="line">        buckets[i] = 0;</span><br><span class="line">    }</span><br><span class="line">    for (auto i : people)</span><br><span class="line">    { //2. 记录</span><br><span class="line">        buckets[i]++;</span><br><span class="line">    }</span><br><span class="line">    for (int i = 0; i &lt;= 10; i++)</span><br><span class="line">    { //3. 打印</span><br><span class="line">        while (buckets[i] != 0)</span><br><span class="line">        {</span><br><span class="line">            std::cout &lt;&lt; i &lt;&lt; " ";</span><br><span class="line">            buckets[i]--;  // 输出完后减一</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>如果想要从大到小排序，只需要将第3步的循环倒叙遍历即可。</p><p>当然这并不是桶排序，真正的桶排序比这复杂的多，只是用到了桶排序的一种思想而已。<br>时间复杂度O（M+N），对于空间复杂度这里便不说，这场战役只成功一半。</p><hr><p>新手练习写Blog，有错请指教</p><hr><p>output：1 3 5 5 7</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;桶排序最简单最快的排序方法&quot;&gt;&lt;a href=&quot;#桶排序最简单最快的排序方法&quot; class=&quot;headerlink&quot; title=&quot;桶排序最简单最快的排序方法&quot;&gt;&lt;/a&gt;桶排序最简单最快的排序方法&lt;/h2&gt;&lt;h2 id=&quot;假定有五个人，他们身上分别由，-5，-3，
+      
+    
+    </summary>
+    
+    
+      <category term="算法" scheme="https://NonCover.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="排序" scheme="https://NonCover.github.io/tags/%E6%8E%92%E5%BA%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>约瑟夫环问题</title>
