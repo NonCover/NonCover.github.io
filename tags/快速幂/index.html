@@ -6,7 +6,7 @@
     
     
     
-    <title>noc的手记 | hello world</title>
+    <title>标签: 快速幂 | noc的手记 | hello world</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     
     <meta name="theme-color" content="#77AAFF">
@@ -44,7 +44,7 @@
     <meta name="description" content="记录在学习道路上以及生活上的一些收获">
 <meta property="og:type" content="website">
 <meta property="og:title" content="noc的手记">
-<meta property="og:url" content="https://noncover.github.io/index.html">
+<meta property="og:url" content="https://noncover.github.io/tags/%E5%BF%AB%E9%80%9F%E5%B9%82/index.html">
 <meta property="og:site_name" content="noc的手记">
 <meta property="og:description" content="记录在学习道路上以及生活上的一些收获">
 <meta property="article:author" content="NonCover">
@@ -89,7 +89,7 @@
     <div class="scroll-wrap flex-col">
       <ul class="nav">
         
-              <li class="waves-block waves-effect active">
+              <li class="waves-block waves-effect">
                   <a href="/"  >
                     <i class="icon icon-lg icon-home"></i>
                     <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
@@ -110,7 +110,7 @@
                   </a>
               </li>
             
-              <li class="waves-block waves-effect">
+              <li class="waves-block waves-effect active">
                   <a href="/tags"  >
                     <i class="icon icon-lg icon-tags"></i>
                     <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
@@ -155,7 +155,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">noc的手记</div>
+        <div class="flex-col header-title ellipsis">标签: 快速幂</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -172,19 +172,29 @@
         </a>
     </div>
 </header>
-<header class="content-header index-header">
+<header class="content-header tags-header">
     
     
     <div class="container fade-scale">
         <div id="myheader">
             <h1 class="title">
-                 
-                    noc的手记
                 
             </h1>
             <h5 class="subtitle">
                 
-                    在编程道路上继续前进
+                    <h1 id="pagetitle" class="archivestitle"></h1>
+                    <script>
+                        if(location.href.indexOf('about')!=-1){
+                            pagetitle.textContent = 'xxxxxx';
+                        }else if(location.href.indexOf('tags')!=-1||location.href.indexOf('categories')!=-1){
+                            var a=location.href.substring(location.href.length-5,location.href.length-1);
+                            if(a==='tags'){
+                                pagetitle.textContent = '自然界的书是用数学的语言写成的';
+                            }else if(a==='ries'){
+                                pagetitle.textContent = '一切推理都必须从观察与实验得来';
+                            }
+                        }
+                    </script>
                 
             </h5>
         </div>
@@ -192,14 +202,30 @@
 
 </header>
 
-<div class="container body-wrap">
-    <ul class="post-list">
-    
-        <li class="post-list-item fade">
-            <article id="post-如何优雅的进行幂计算"
-  class="article-card article-type-post" itemprop="blogPost">
 
-    
+    <div class="container body-wrap fade">
+        
+            
+            
+            <h5 class="tag-tip">
+                <i class="icon icon-tag"></i>
+                关于
+                <span style="color:rgb(100, 100, 100)">快速幂</span>
+                共1篇文章
+            </h5>
+            <div class="waterfall">
+            
+                <article class="archive-article" onclick="location.href='/2020/05/08/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E8%BF%9B%E8%A1%8C%E5%B9%82%E8%AE%A1%E7%AE%97/'">
+    <div class="archive-article-date">
+      
+      <time class="my-post-time">
+        <i class="icon icon-lg icon-file-text-o"></i>
+        &nbsp;
+          2020-05-08
+      </time>
+    </div>
+    <div class="archive-article-inner">
+      
 
 
   
@@ -210,290 +236,15 @@
 
 
 
-
-     <div class="post-meta">
-        <time class="post-time" title="2020-05-08 11:39:20" datetime="2020-05-08T03:39:20.000Z"  itemprop="datePublished">2020-05-08</time>
-
-    </div>
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        朴素算法幂计算...
-    
-        <div class="post-more-div">
-            <a href="/2020/05/08/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E8%BF%9B%E8%A1%8C%E5%B9%82%E8%AE%A1%E7%AE%97/" class="post-more waves-button">
-                Continue reading...
-            </a>
-        </div>
-    </div>
-    
-    <div class="post-footer">
-        
+      <br/>
+      
 	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BF%AB%E9%80%9F%E5%B9%82/" rel="tag">快速幂</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag">数学</a></li></ul>
 
     </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-非递归遍历二叉树"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a href="/2020/05/05/%E9%9D%9E%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86%E4%BA%8C%E5%8F%89%E6%A0%91/">非递归遍历二叉树</a>
-    </h3>
-  
-
-
-
-
-     <div class="post-meta">
-        <time class="post-time" title="2020-05-05 14:29:12" datetime="2020-05-05T06:29:12.000Z"  itemprop="datePublished">2020-05-05</time>
-
-    </div>
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        前言今天在力扣...
-    
-        <div class="post-more-div">
-            <a href="/2020/05/05/%E9%9D%9E%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86%E4%BA%8C%E5%8F%89%E6%A0%91/" class="post-more waves-button">
-                Continue reading...
-            </a>
-        </div>
-    </div>
-    
-    <div class="post-footer">
+  </article>
+            
+            </div>
         
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BF%AD%E4%BB%A3%E6%B3%95/" rel="tag">迭代法</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-桶排序"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a href="/2020/04/28/%E6%A1%B6%E6%8E%92%E5%BA%8F/">桶排序</a>
-    </h3>
-  
-
-
-
-
-     <div class="post-meta">
-        <time class="post-time" title="2020-04-28 20:09:15" datetime="2020-04-28T12:09:15.000Z"  itemprop="datePublished">2020-04-28</time>
-
-    </div>
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        桶排序最简单最...
-    
-        <div class="post-more-div">
-            <a href="/2020/04/28/%E6%A1%B6%E6%8E%92%E5%BA%8F/" class="post-more waves-button">
-                Continue reading...
-            </a>
-        </div>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-约瑟夫环问题"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a href="/2020/04/27/%E7%BA%A6%E7%91%9F%E5%A4%AB%E7%8E%AF%E9%97%AE%E9%A2%98/">约瑟夫环问题</a>
-    </h3>
-  
-
-
-
-
-     <div class="post-meta">
-        <time class="post-time" title="2020-04-27 20:23:55" datetime="2020-04-27T12:23:55.000Z"  itemprop="datePublished">2020-04-27</time>
-
-    </div>
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        什么是约瑟夫环...
-    
-        <div class="post-more-div">
-            <a href="/2020/04/27/%E7%BA%A6%E7%91%9F%E5%A4%AB%E7%8E%AF%E9%97%AE%E9%A2%98/" class="post-more waves-button">
-                Continue reading...
-            </a>
-        </div>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag">链表</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-链表的中点节点simple"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a href="/2020/04/27/%E9%93%BE%E8%A1%A8%E7%9A%84%E4%B8%AD%E7%82%B9%E8%8A%82%E7%82%B9simple/">链表的中点节点simple</a>
-    </h3>
-  
-
-
-
-
-     <div class="post-meta">
-        <time class="post-time" title="2020-04-27 20:09:58" datetime="2020-04-27T12:09:58.000Z"  itemprop="datePublished">2020-04-27</time>
-
-    </div>
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        快慢指针遍历链...
-    
-        <div class="post-more-div">
-            <a href="/2020/04/27/%E9%93%BE%E8%A1%A8%E7%9A%84%E4%B8%AD%E7%82%B9%E8%8A%82%E7%82%B9simple/" class="post-more waves-button">
-                Continue reading...
-            </a>
-        </div>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8C%87%E9%92%88/" rel="tag">指针</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag">链表</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-不正式的文章"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a href="/2020/04/24/%E4%B8%8D%E6%AD%A3%E5%BC%8F%E7%9A%84%E6%96%87%E7%AB%A0/">不正式的文章</a>
-    </h3>
-  
-
-
-
-
-     <div class="post-meta">
-        <time class="post-time" title="2020-04-24 21:18:10" datetime="2020-04-24T13:18:10.000Z"  itemprop="datePublished">2020-04-24</time>
-
-    </div>
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-虽然没啥人看...
-    
-        <div class="post-more-div">
-            <a href="/2020/04/24/%E4%B8%8D%E6%AD%A3%E5%BC%8F%E7%9A%84%E6%96%87%E7%AB%A0/" class="post-more waves-button">
-                Continue reading...
-            </a>
-        </div>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%B8%80%E4%BA%9B%E8%AF%9D/" rel="tag">一些话</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-hello-world"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a href="/2020/04/24/hello-world/">Hello World</a>
-    </h3>
-  
-
-
-
-
-     <div class="post-meta">
-        <time class="post-time" title="2020-04-24 17:24:05" datetime="2020-04-24T09:24:05.413Z"  itemprop="datePublished">2020-04-24</time>
-
-    </div>
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        Welcome...
-    
-        <div class="post-more-div">
-            <a href="/2020/04/24/hello-world/" class="post-more waves-button">
-                Continue reading...
-            </a>
-        </div>
-    </div>
-    
-</article>
-
-        </li>
-    
-    </ul>
-
-    
 
 </div>
 

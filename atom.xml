@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://noncover.github.io/"/>
-  <updated>2020-05-05T06:30:20.055Z</updated>
+  <updated>2020-05-08T03:40:23.726Z</updated>
   <id>https://noncover.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何优雅的进行幂计算</title>
+    <link href="https://noncover.github.io/2020/05/08/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E8%BF%9B%E8%A1%8C%E5%B9%82%E8%AE%A1%E7%AE%97/"/>
+    <id>https://noncover.github.io/2020/05/08/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E8%BF%9B%E8%A1%8C%E5%B9%82%E8%AE%A1%E7%AE%97/</id>
+    <published>2020-05-08T03:39:20.000Z</published>
+    <updated>2020-05-08T03:40:23.726Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="朴素算法"><a href="#朴素算法" class="headerlink" title="朴素算法"></a>朴素算法</h1><p>幂计算最简单也最容易想到的算法当然是朴素算法了，不说了，直接看代码</p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mi</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span> </span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line"><span class="keyword">int</span> ans = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span> (m &gt; <span class="number">0</span>)</span><br><span class="line">{</span><br><span class="line">ans *= n;</span><br><span class="line">m--;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">return</span> ans;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>时间复杂度：O（n）</p><h1 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h1><p>快速幂其实就是用了二分的思想，我们来看 2^10如何计算的</p><p>2^10 = 2 ^ 5 x 2 ^ 5 = 32 x 32 =1024</p><p>2 ^ 5 = 2 ^ 2 x 2 ^ 2 x 2 = 4 x 4 x 2 = 32</p><p>2 ^ 2 = 2 x 2 = 4</p><p>当然，我们遇到幂为奇数的时候，就用一个变量来保存答案</p><p>当计算10次方的时候，我们也只计算了3次，算法复杂度从 O(n) 下降到了 O(log2n)</p><p>整理思路如下步骤；</p><p>\1. 把幂对半分</p><p>\2. 遇到幂为奇数时，就更新答案</p><p>\3. 幂直到为0，就返回答案</p><p>代码如下：</p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mi</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line"><span class="keyword">int</span> ans = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> tmp = n;</span><br><span class="line"><span class="keyword">while</span> (m &gt; <span class="number">0</span>)</span><br><span class="line">{</span><br><span class="line"><span class="keyword">if</span> (m &amp; <span class="number">1</span>) ans *= tmp;</span><br><span class="line">tmp *= tmp;</span><br><span class="line">m &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">return</span> ans;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><blockquote><p><strong>需要注意的是，当幂很大时，我们会造成整形溢出，所以一般用 long或者long long的数据类型</strong></p></blockquote><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;朴素算法&quot;&gt;&lt;a href=&quot;#朴素算法&quot; class=&quot;headerlink&quot; title=&quot;朴素算法&quot;&gt;&lt;/a&gt;朴素算法&lt;/h1&gt;&lt;p&gt;幂计算最简单也最容易想到的算法当然是朴素算法了，不说了，直接看代码&lt;/p&gt;
+&lt;figure class=&quot;highlight
+      
+    
+    </summary>
+    
+    
+      <category term="算法" scheme="https://NonCover.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="数学" scheme="https://NonCover.github.io/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+      <category term="快速幂" scheme="https://NonCover.github.io/tags/%E5%BF%AB%E9%80%9F%E5%B9%82/"/>
+    
+  </entry>
   
   <entry>
     <title>非递归遍历二叉树</title>
