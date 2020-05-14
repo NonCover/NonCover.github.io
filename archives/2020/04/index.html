@@ -126,16 +126,16 @@
             
       <div class="nav2">
           
-              <a class="nav2item" data-title="Email" href="mailto:3471949741@qq.com" target="_parent"title="Email" >
+              	<a href="mailto:3471949741@qq.com" target="_parent"title="Email" >
                 <i class="icon icon-lg icon-envelope-o envelope-o"></i>
               </a>
           
-              <a class="nav2item" data-title="Github" href="https://github.com/NonCover" target="_blank"title="Github" >
+              	<a href="https://github.com/NonCover" target="_blank"title="Github" >
                 <i class="icon icon-lg icon-github github"></i>
               </a>
           
-              <a class="nav2item" data-title="web" href="http://lock2016.xyz" target="_blank"title="web" >
-                <i class="icon icon-lg icon-Web Web"></i>
+              	<a href="javascript:;" id="wechat_icon" title="欢迎关注公众号" >
+                <i class="icon icon-lg icon-weixin weixin"></i>
               </a>
           
 
@@ -398,6 +398,16 @@
 
     </main>
     
+    <div id="wechat" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h4 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>欢迎关注微信公众号公众号！</span>
+        <i class="icon icon-quote-right"></i>
+    </h4>
+    <img id="wechat_img" data-img="/img/wechat.jpg" alt="欢迎您的关注！">
+</div>
+
     <div class="mask" id="mask"></div>
 <a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
@@ -494,7 +504,6 @@ if(window.innerWidth > 800){
 
 /* 名字跳动 */
 $("#name").bumpyText();
-
 
 /* 网站运行时间 */
 setInterval(function () {
