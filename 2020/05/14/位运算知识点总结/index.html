@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>位运算知识点总结 | noc的手记 | hello world</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="位运算,数码">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+	<script src="//hm.baidu.com/hm.js?77018fff337dacf0c04f32a378791855"></script>
+
+
+    
+    <meta name="description" content="概述任何一台计算机内部保存的是二进制，再进行逻辑运算和算术运算的时候，计算机只会对二进制执行运算，而计算机对二进制执行的运算叫做位运算。 举例说明，计算机执行3 + 5是如何计算的。 3： 0 0 0 0  0 0 1 1  5： 0 0 0 0  0 1 0 1 8： 0 0 0 0  1 0 0 0     就这样讲十进制转换成二进制后，执行简单的0，1计算，我们平时再写代码的时候常用的运算符">
+<meta property="og:type" content="article">
+<meta property="og:title" content="位运算知识点总结">
+<meta property="og:url" content="https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="noc的手记">
+<meta property="og:description" content="概述任何一台计算机内部保存的是二进制，再进行逻辑运算和算术运算的时候，计算机只会对二进制执行运算，而计算机对二进制执行的运算叫做位运算。 举例说明，计算机执行3 + 5是如何计算的。 3： 0 0 0 0  0 0 1 1  5： 0 0 0 0  0 1 0 1 8： 0 0 0 0  1 0 0 0     就这样讲十进制转换成二进制后，执行简单的0，1计算，我们平时再写代码的时候常用的运算符">
+<meta property="article:published_time" content="2020-05-14T04:12:58.000Z">
+<meta property="article:modified_time" content="2020-05-14T04:14:27.941Z">
+<meta property="article:author" content="NonCover">
+<meta property="article:tag" content="位运算">
+<meta property="article:tag" content="数码">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="noc的手记" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=3.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"  class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">NonCover</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/about"  >
+                    <i class="icon icon-lg icon-smile-o"></i>
+                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+      <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:3471949741@qq.com" target="_parent"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/NonCover" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+              <a class="nav2item" data-title="web" href="http://lock2016.xyz" target="_blank"title="web" >
+                <i class="icon icon-lg icon-Web Web"></i>
+              </a>
+          
+
+            </div>
+        
+      </ul>
+        
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">位运算知识点总结</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#位运算符"><span class="post-toc-number">2.</span> <span class="post-toc-text">位运算符</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#按位与（-amp-）"><span class="post-toc-number">3.</span> <span class="post-toc-text">按位与（&amp;）</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#按位或（-）"><span class="post-toc-number">4.</span> <span class="post-toc-text">按位或（|）</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#按位异或（-）"><span class="post-toc-number">5.</span> <span class="post-toc-text">按位异或（^）</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#按位取反"><span class="post-toc-number">6.</span> <span class="post-toc-text">按位取反</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#左移（-lt-lt-）"><span class="post-toc-number">7.</span> <span class="post-toc-text">左移（&lt;&lt;）</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#右移（-gt-gt-）"><span class="post-toc-number">8.</span> <span class="post-toc-text">右移（&gt;&gt;）</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">9.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-位运算知识点总结"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">位运算知识点总结</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2020-05-14 12:12:58" datetime="2020-05-14T04:12:58.000Z"  itemprop="datePublished">2020-05-14</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">5</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>任何一台计算机内部保存的是二进制，再进行逻辑运算和算术运算的时候，计算机只会对二进制执行运算，而计算机对二进制执行的运算叫做位运算。</p>
+<p>举例说明，计算机执行3 + 5是如何计算的。</p>
+<p>3： 0 0 0 0  0 0 1 1 </p>
+<p>5： 0 0 0 0  0 1 0 1</p>
+<p>8： 0 0 0 0  1 0 0 0   </p>
+<p> 就这样讲十进制转换成二进制后，执行简单的0，1计算，我们平时再写代码的时候常用的运算符为（+，-，*，/，%），但是如何我们能合理的使用位运算，将很大程度上提高我们代码执行的效率。</p>
+<h1 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h1><table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th align="center">名称</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>&amp;</strong></td>
+<td align="center">与</td>
+<td align="center">都为1，才为1</td>
+</tr>
+<tr>
+<td align="center"><strong>|</strong></td>
+<td align="center">或</td>
+<td align="center">有一个1，都可以为1</td>
+</tr>
+<tr>
+<td align="center"><strong>^</strong></td>
+<td align="center">异或</td>
+<td align="center">相同为0，不同为1</td>
+</tr>
+<tr>
+<td align="center"><strong>~</strong></td>
+<td align="center">取反</td>
+<td align="center">1变为0，0变为1</td>
+</tr>
+<tr>
+<td align="center"><strong>&lt;&lt;</strong></td>
+<td align="center">左移</td>
+<td align="center">所有位向左移动若干位，高位溢出丢弃，低位补0</td>
+</tr>
+<tr>
+<td align="center"><strong>&gt;&gt;</strong></td>
+<td align="center">右移</td>
+<td align="center">所有位向左移动若干位，分有符号位和无符号位</td>
+</tr>
+</tbody></table>
+<h1 id="按位与（-amp-）"><a href="#按位与（-amp-）" class="headerlink" title="按位与（&amp;）"></a>按位与（&amp;）</h1><p>先看与运算逻辑：</p>
+<p>1 &amp; 1 = 1， 1 &amp; 0 = 0， 0 &amp; 1= 0， 0 &amp; 0 = 0</p>
+<p>当第一个数为0时，此时形成断路，剩下的表达式不会执行，程序就会输出0</p>
+<blockquote>
+<p>input: 2 &amp; 2</p>
+<p>output: 2</p>
+<p>input: 2 &amp; 0</p>
+<p>output: 0</p>
+</blockquote>
+<p>总结规律：</p>
+<ol>
+<li><p>任何一个数与其本身与为其本身，与0与为0</p>
+</li>
+<li><p>另外通过与运算，我们可以知道一个数是否是奇数还是偶数。</p>
+<blockquote>
+<p>奇数 &amp; 1 = 1</p>
+<p>偶数 &amp; 1 = 0</p>
+</blockquote>
+</li>
+</ol>
+<h1 id="按位或（-）"><a href="#按位或（-）" class="headerlink" title="按位或（|）"></a>按位或（|）</h1><p>运算逻辑：</p>
+<p>1 | 1 = 1，1 | 0 = 1，0 | 1 = 1，0 | 0 = 0</p>
+<p>注意：负数的或运算按它的<strong>补码</strong>进行运算（负数的补码 = 原码取反 + 1）</p>
+<h1 id="按位异或（-）"><a href="#按位异或（-）" class="headerlink" title="按位异或（^）"></a>按位异或（^）</h1><p>运算逻辑：</p>
+<p>1 ^ 1 = 0，1 ^ 0 = 1,  0 ^ 1 = 1,  0 ^ 0 = 0</p>
+<p>总结：</p>
+<ol>
+<li>参加运算的两个数相同的话为0</li>
+<li>任何一个数与0进行异或为其本身</li>
+</ol>
+<p>异或满足以下几个性质：</p>
+<ul>
+<li>交换律：a ^ b = b ^ a</li>
+<li>结合律：a ^ (b ^ c) = (a ^ b) ^ c</li>
+<li>自反性：a ^ b ^ b =  a ^ 0 = a</li>
+<li>a ^ a = 0, a ^ 0 = a</li>
+</ul>
+<p>同样，异或运算还能够交换两个数，再没有第三个数的情况下：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>&amp; a, <span class="keyword">int</span> &amp;b)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	a ^= b;</span><br><span class="line">	b ^= a;</span><br><span class="line">	a ^= b;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="按位取反"><a href="#按位取反" class="headerlink" title="按位取反"></a>按位取反</h1><p>运算逻辑：</p>
+<p>~1 = 0, ~0 = 1</p>
+<p>如果我们再IDE中编译的话，我们会发现~1 = -2, ~0 = -1。</p>
+<p>what？这是怎么一回事，不是取反嘛，怎么会成这种结果。</p>
+<p>其实上面的结果并没有错，我们一步一步来看。</p>
+<p>我们假设都为八位二进制。</p>
+<p>1： 0000 0001</p>
+<p>取反的结果为：1111 1110，此时这个数为负数是以补码的形式保存在计算机内部中的，我们取它的原码为：1000 0010，最高位为符号位，此时为负。</p>
+<p>所以最终结果为-2。</p>
+<p> 我们在来看负数如何取反，</p>
+<p>例如：~-2 = 1是如何得来得</p>
+<p>要知道计算机保存负数是保存的它的补码。</p>
+<p>-2 ：1000 0010</p>
+<p>补码：1111 1110</p>
+<p>此时再取反：0000 0001此时为正数</p>
+<p>取原码：0000 0001（正数的补码=原码），所以最终结果为1</p>
+<p>说到这，我们再来说一下负数的补码怎么计算：</p>
+<blockquote>
+<p>X补 = ~X原 + 1 (原码取反加1，符号为不变) </p>
+</blockquote>
+<p>正数的原码=反码=补码</p>
+<h1 id="左移（-lt-lt-）"><a href="#左移（-lt-lt-）" class="headerlink" title="左移（<<）"></a>左移（&lt;&lt;）</h1><p>运算逻辑：</p>
+<p>正数的左移，例如int32位正数，把每一位向左移动若干位，最左边的位丢弃若干位，最右边的补上若干0</p>
+<p>负数的话，由于最高位是1，所以最高位保持不变，左边舍弃若干个，除了最高位，右边补若干个0即可</p>
+<p>例如 a = 1000 0110（-6）    a &lt;&lt; 1 = 1000 11 00（-12）</p>
+<p>其实我们可以发现，左移实际上就是 <strong>a * 2的左移多少位次方</strong>，</p>
+<h1 id="右移（-gt-gt-）"><a href="#右移（-gt-gt-）" class="headerlink" title="右移（>>）"></a>右移（&gt;&gt;）</h1><p>运算逻辑:</p>
+<p>正数的右移若干位，只需要左边补上若干个0，右边舍弃若干个即可。</p>
+<p>负数的右移若干位，只需左边不上若干个1，右边舍弃若干个。</p>
+<blockquote>
+<p>5 &gt;&gt; 1 = 2</p>
+<p>5 &gt;&gt; 2 = 1</p>
+</blockquote>
+<p>右移多少位，相当于除于2的多少位次方。</p>
+<p>不过需要注意的是，我们有些编程语言处理情况不一样。</p>
+<p>在Java中，-3 &gt;&gt; 1 = -2,  -3 / 2 = -1</p>
+<p>但是在Python中，-3 &gt;&gt; 1 = -2, -3 // 2 = -2。</p>
+<p>不过右移运算得出的答案都遵循计算机运算规则，但是除法的话是按照解释器的处理而言。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>位运算到此为止，我们再写代码的时候其实可以把某些运算写成位运算更能题高效率。</p>
+<ol>
+<li><p>判断x的奇偶数</p>
+<blockquote>
+<p>x % 2 == 1 // 常规写法</p>
+<p>x &amp; 1 == 1 // 为真奇数，为假偶数 </p>
+</blockquote>
+</li>
+<li><p>计算中位数</p>
+<blockquote>
+<p>mid = (left + right) / 2  // 常规写法</p>
+<p>mid  = (left + right) &gt;&gt; 1 // 位运算</p>
+</blockquote>
+</li>
+<li><p>交换两个数</p>
+<blockquote>
+<p>a ^= b</p>
+<p>b ^= a</p>
+<p>a ^= b</p>
+</blockquote>
+</li>
+</ol>
+<p>总结到此，欢迎补充</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-05-14T04:14:27.941Z" itemprop="dateUpdated">2020-05-14 12:14:27</time>
+</span>
+
+
+        
+        原文链接：<a href="/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" target="_blank" rel="external">https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://NonCover.github.io'">
+            <img src="/img/avatar.jpg" alt="NonCover">
+            <a>NonCover</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/" rel="tag">位运算</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E7%A0%81/" rel="tag">数码</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/&title=《位运算知识点总结》 — noc的手记&pic=https://NonCover.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/&title=《位运算知识点总结》 — noc的手记&source=记录在学习道路上以及生活上的一些收获" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《位运算知识点总结》 — noc的手记&url=https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/&via=https://NonCover.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/05/13/%E5%95%A5%EF%BC%9F%E6%88%91%E5%86%99%E4%BA%86%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%99%A8/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：啥？我写了个服务器">下一篇：啥？我写了个服务器</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: '',
+            repo: '',
+            oauth: {
+                client_id: '',
+                client_secret: '',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+    
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: '',
+            clientSecret: '',
+            repo: '',
+            owner: '',
+            admin: ['']
+        });
+        gitalk.render('gitalk-container');
+    </script>
+</section>
+
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2016
+            <i class="icon icon-lg icon-heart"></i>
+            <a href="https://NonCover.github.io">lock2016</a>
+            <br/>
+            Power by
+            <a href="https://hexo.io/" target="_blank" rel="external nofollow">Hexo</a>&nbsp;·&nbsp;
+            Theme
+            <a class="tomotoeslink" href="https://github.com/tomotoes/hexo-theme-tomotoes/" target="_blank" rel="external nofollow">tomotoes</a>
+        </span>
+
+        <br/>
+
+        <span id="RunTime" style="color:#a7a7a2;"></span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+
+        </span>
+        <br/>
+
+        <span class="license">This blog is licensed under a <a rel="license noopener" rel="external nofollow noopener" href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>.</span>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>为五斗米折腰(支付宝)</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/img/alipay.png" alt="打赏二维码">
+        </div>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/&title=《位运算知识点总结》 — noc的手记&pic=https://NonCover.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/&title=《位运算知识点总结》 — noc的手记&source=记录在学习道路上以及生活上的一些收获" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《位运算知识点总结》 — noc的手记&url=https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/&via=https://NonCover.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" alt="微信分享二维码">
+</div>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?77018fff337dacf0c04f32a378791855";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=3.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=3.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=3.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2020/4/24");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: ""
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "NonCover");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+		console.log("\n %c 一个坏掉的番茄 %c  © Simon Ma  http://tomotoes.com \n\n", "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;", "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;");
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+</body>
+</html>

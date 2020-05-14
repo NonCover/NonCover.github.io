@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://noncover.github.io/"/>
-  <updated>2020-05-13T08:27:15.279Z</updated>
+  <updated>2020-05-14T04:14:27.941Z</updated>
   <id>https://noncover.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>位运算知识点总结</title>
+    <link href="https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>https://noncover.github.io/2020/05/14/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/</id>
+    <published>2020-05-14T04:12:58.000Z</published>
+    <updated>2020-05-14T04:14:27.941Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>任何一台计算机内部保存的是二进制，再进行逻辑运算和算术运算的时候，计算机只会对二进制执行运算，而计算机对二进制执行的运算叫做位运算。</p><p>举例说明，计算机执行3 + 5是如何计算的。</p><p>3： 0 0 0 0  0 0 1 1 </p><p>5： 0 0 0 0  0 1 0 1</p><p>8： 0 0 0 0  1 0 0 0   </p><p> 就这样讲十进制转换成二进制后，执行简单的0，1计算，我们平时再写代码的时候常用的运算符为（+，-，*，/，%），但是如何我们能合理的使用位运算，将很大程度上提高我们代码执行的效率。</p><h1 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h1><table><thead><tr><th align="center">符号</th><th align="center">名称</th><th align="center">作用</th></tr></thead><tbody><tr><td align="center"><strong>&amp;</strong></td><td align="center">与</td><td align="center">都为1，才为1</td></tr><tr><td align="center"><strong>|</strong></td><td align="center">或</td><td align="center">有一个1，都可以为1</td></tr><tr><td align="center"><strong>^</strong></td><td align="center">异或</td><td align="center">相同为0，不同为1</td></tr><tr><td align="center"><strong>~</strong></td><td align="center">取反</td><td align="center">1变为0，0变为1</td></tr><tr><td align="center"><strong>&lt;&lt;</strong></td><td align="center">左移</td><td align="center">所有位向左移动若干位，高位溢出丢弃，低位补0</td></tr><tr><td align="center"><strong>&gt;&gt;</strong></td><td align="center">右移</td><td align="center">所有位向左移动若干位，分有符号位和无符号位</td></tr></tbody></table><h1 id="按位与（-amp-）"><a href="#按位与（-amp-）" class="headerlink" title="按位与（&amp;）"></a>按位与（&amp;）</h1><p>先看与运算逻辑：</p><p>1 &amp; 1 = 1， 1 &amp; 0 = 0， 0 &amp; 1= 0， 0 &amp; 0 = 0</p><p>当第一个数为0时，此时形成断路，剩下的表达式不会执行，程序就会输出0</p><blockquote><p>input: 2 &amp; 2</p><p>output: 2</p><p>input: 2 &amp; 0</p><p>output: 0</p></blockquote><p>总结规律：</p><ol><li><p>任何一个数与其本身与为其本身，与0与为0</p></li><li><p>另外通过与运算，我们可以知道一个数是否是奇数还是偶数。</p><blockquote><p>奇数 &amp; 1 = 1</p><p>偶数 &amp; 1 = 0</p></blockquote></li></ol><h1 id="按位或（-）"><a href="#按位或（-）" class="headerlink" title="按位或（|）"></a>按位或（|）</h1><p>运算逻辑：</p><p>1 | 1 = 1，1 | 0 = 1，0 | 1 = 1，0 | 0 = 0</p><p>注意：负数的或运算按它的<strong>补码</strong>进行运算（负数的补码 = 原码取反 + 1）</p><h1 id="按位异或（-）"><a href="#按位异或（-）" class="headerlink" title="按位异或（^）"></a>按位异或（^）</h1><p>运算逻辑：</p><p>1 ^ 1 = 0，1 ^ 0 = 1,  0 ^ 1 = 1,  0 ^ 0 = 0</p><p>总结：</p><ol><li>参加运算的两个数相同的话为0</li><li>任何一个数与0进行异或为其本身</li></ol><p>异或满足以下几个性质：</p><ul><li>交换律：a ^ b = b ^ a</li><li>结合律：a ^ (b ^ c) = (a ^ b) ^ c</li><li>自反性：a ^ b ^ b =  a ^ 0 = a</li><li>a ^ a = 0, a ^ 0 = a</li></ul><p>同样，异或运算还能够交换两个数，再没有第三个数的情况下：</p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>&amp; a, <span class="keyword">int</span> &amp;b)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">a ^= b;</span><br><span class="line">b ^= a;</span><br><span class="line">a ^= b;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><h1 id="按位取反"><a href="#按位取反" class="headerlink" title="按位取反"></a>按位取反</h1><p>运算逻辑：</p><p>~1 = 0, ~0 = 1</p><p>如果我们再IDE中编译的话，我们会发现~1 = -2, ~0 = -1。</p><p>what？这是怎么一回事，不是取反嘛，怎么会成这种结果。</p><p>其实上面的结果并没有错，我们一步一步来看。</p><p>我们假设都为八位二进制。</p><p>1： 0000 0001</p><p>取反的结果为：1111 1110，此时这个数为负数是以补码的形式保存在计算机内部中的，我们取它的原码为：1000 0010，最高位为符号位，此时为负。</p><p>所以最终结果为-2。</p><p> 我们在来看负数如何取反，</p><p>例如：~-2 = 1是如何得来得</p><p>要知道计算机保存负数是保存的它的补码。</p><p>-2 ：1000 0010</p><p>补码：1111 1110</p><p>此时再取反：0000 0001此时为正数</p><p>取原码：0000 0001（正数的补码=原码），所以最终结果为1</p><p>说到这，我们再来说一下负数的补码怎么计算：</p><blockquote><p>X补 = ~X原 + 1 (原码取反加1，符号为不变) </p></blockquote><p>正数的原码=反码=补码</p><h1 id="左移（-lt-lt-）"><a href="#左移（-lt-lt-）" class="headerlink" title="左移（<<）"></a>左移（&lt;&lt;）</h1><p>运算逻辑：</p><p>正数的左移，例如int32位正数，把每一位向左移动若干位，最左边的位丢弃若干位，最右边的补上若干0</p><p>负数的话，由于最高位是1，所以最高位保持不变，左边舍弃若干个，除了最高位，右边补若干个0即可</p><p>例如 a = 1000 0110（-6）    a &lt;&lt; 1 = 1000 11 00（-12）</p><p>其实我们可以发现，左移实际上就是 <strong>a * 2的左移多少位次方</strong>，</p><h1 id="右移（-gt-gt-）"><a href="#右移（-gt-gt-）" class="headerlink" title="右移（>>）"></a>右移（&gt;&gt;）</h1><p>运算逻辑:</p><p>正数的右移若干位，只需要左边补上若干个0，右边舍弃若干个即可。</p><p>负数的右移若干位，只需左边不上若干个1，右边舍弃若干个。</p><blockquote><p>5 &gt;&gt; 1 = 2</p><p>5 &gt;&gt; 2 = 1</p></blockquote><p>右移多少位，相当于除于2的多少位次方。</p><p>不过需要注意的是，我们有些编程语言处理情况不一样。</p><p>在Java中，-3 &gt;&gt; 1 = -2,  -3 / 2 = -1</p><p>但是在Python中，-3 &gt;&gt; 1 = -2, -3 // 2 = -2。</p><p>不过右移运算得出的答案都遵循计算机运算规则，但是除法的话是按照解释器的处理而言。</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>位运算到此为止，我们再写代码的时候其实可以把某些运算写成位运算更能题高效率。</p><ol><li><p>判断x的奇偶数</p><blockquote><p>x % 2 == 1 // 常规写法</p><p>x &amp; 1 == 1 // 为真奇数，为假偶数 </p></blockquote></li><li><p>计算中位数</p><blockquote><p>mid = (left + right) / 2  // 常规写法</p><p>mid  = (left + right) &gt;&gt; 1 // 位运算</p></blockquote></li><li><p>交换两个数</p><blockquote><p>a ^= b</p><p>b ^= a</p><p>a ^= b</p></blockquote></li></ol><p>总结到此，欢迎补充</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;任何一台计算机内部保存的是二进制，再进行逻辑运算和算术运算的时候，计算机只会对二进制执行运算，而计算机对二进制执行的运算叫做位运算。&lt;/p&gt;
+      
+    
+    </summary>
+    
+    
+      <category term="计算机基础" scheme="https://NonCover.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="位运算" scheme="https://NonCover.github.io/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/"/>
+    
+      <category term="数码" scheme="https://NonCover.github.io/tags/%E6%95%B0%E7%A0%81/"/>
+    
+  </entry>
   
   <entry>
     <title>啥？我写了个服务器</title>
