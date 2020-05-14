@@ -68,7 +68,7 @@
 
 <body>
     <div id="loading" class="active"></div>
-    <aside id="menu"   >
+    side id="menu"  >
   <div class="inner flex-row-vertical">
     <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
         <i class="icon icon-lg icon-close"></i>
@@ -88,63 +88,75 @@
     </div>
     <div class="scroll-wrap flex-col">
       <ul class="nav">
+      <div id="menuitems">
         
               <li class="waves-block waves-effect">
                   <a href="/"  >
                     <i class="icon icon-lg icon-home"></i>
-                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                    <span data-hover="主 页">主 页</span>
+                    <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
                   </a>
               </li>
             
               <li class="waves-block waves-effect">
                   <a href="/archives"  >
                     <i class="icon icon-lg icon-archives"></i>
-                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                    <span data-hover="归 档">归 档</span>
+                    <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
                   </a>
               </li>
             
               <li class="waves-block waves-effect">
                   <a href="/categories"  >
                     <i class="icon icon-lg icon-th-list"></i>
-                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                    <span data-hover="分 类">分 类</span>
+                    <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
                   </a>
               </li>
             
               <li class="waves-block waves-effect active">
                   <a href="/tags"  >
                     <i class="icon icon-lg icon-tags"></i>
-                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                    <span data-hover="标 签">标 签</span>
+                    <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
                   </a>
               </li>
             
               <li class="waves-block waves-effect">
                   <a href="/about"  >
                     <i class="icon icon-lg icon-smile-o"></i>
-                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                    <span data-hover="关 于">关 于</span>
+                    <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
                   </a>
               </li>
             
-      </ul>
-      <ul class="nav2">
+          </div>
+          <p></p>
+      <ul class="nav2" id="nav2icons">
           
-	      <li class="waves-block waves-effect">
-              	<a href="mailto:3471949741@qq.com" target="_parent"title="Email" >
+              <li class="waves-block waves-effect">
+               /* <a href="mailto:3471949741@qq.com" target="_parent"title="Email" > */
+		<a href="mailto:3471949741@qq.com" target="_parent"title="Email" >
                   <i class="icon icon-lg icon-envelope-o envelope-o"></i>
                 </a>
               </li>
           
-	      <li class="waves-block waves-effect">
-              	<a href="https://github.com/NonCover" target="_blank"title="Github" >
+              <li class="waves-block waves-effect">
+               /* <a href="https://github.com/NonCover" target="_blank"title="Github" > */
+		<a href="https://github.com/NonCover" target="_blank"title="Github" >
                   <i class="icon icon-lg icon-github github"></i>
                 </a>
               </li>
           
-	      <li class="waves-block waves-effect">
-              	<a href="javascript:;" id="wechat_icon" title="欢迎关注公众号" >
+              <li class="waves-block waves-effect">
+               /* <a href="javascript:;" title="欢迎关注公众号" > */
+		<a href="javascript:;" id="wechat_icon" title="欢迎关注公众号" >
                   <i class="icon icon-lg icon-weixin weixin"></i>
                 </a>
               </li>
           
+
+        </ul>
         
       </ul>
         
