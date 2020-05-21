@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>线段树真的很好写 | noc的手记 | hello world</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="线段树,回溯法">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+	<script src="//hm.baidu.com/hm.js?77018fff337dacf0c04f32a378791855"></script>
+
+
+    
+    <meta name="description" content="线段树是什么？首先，应该明确线段树是一种数据结构，而不是算法，其次线段树能够很有效的解决数组上一些问题，所以在用线段树的时候，我们要明确在哪些地方用，以及用在什么地方。说得更加具体一点，例如说有一个数组[1, 3, 5, 7, 9]，我们想要求下标从1到4的和，按照正常思路，我们遍历一遍数组，用一个变量来保存求和结果，只需要O（N）的时间复杂度就能够求出来了，这也许很快，但还不够快，至少在线段树面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线段树真的很好写">
+<meta property="og:url" content="https://noncover.github.io/2020/05/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9C%9F%E7%9A%84%E5%BE%88%E5%A5%BD%E5%86%99/index.html">
+<meta property="og:site_name" content="noc的手记">
+<meta property="og:description" content="线段树是什么？首先，应该明确线段树是一种数据结构，而不是算法，其次线段树能够很有效的解决数组上一些问题，所以在用线段树的时候，我们要明确在哪些地方用，以及用在什么地方。说得更加具体一点，例如说有一个数组[1, 3, 5, 7, 9]，我们想要求下标从1到4的和，按照正常思路，我们遍历一遍数组，用一个变量来保存求和结果，只需要O（N）的时间复杂度就能够求出来了，这也许很快，但还不够快，至少在线段树面">
+<meta property="og:image" content="http://media.lock2016.xyz/img/%E6%8D%95%E8%8E%B7.PNG">
+<meta property="og:image" content="http://media.lock2016.xyz/img/1.PNG">
+<meta property="og:image" content="http://media.lock2016.xyz/img/3.PNG">
+<meta property="og:image" content="http://media.lock2016.xyz/img/4.PNG">
+<meta property="og:image" content="http://media.lock2016.xyz/img/5.PNG">
+<meta property="og:image" content="http://media.lock2016.xyz/img/6.PNG">
+<meta property="og:image" content="http://media.lock2016.xyz/img/7.PNG">
+<meta property="og:image" content="http://media.lock2016.xyz/img/8.PNG">
+<meta property="og:image" content="http://media.lock2016.xyz/img/9.PNG">
+<meta property="article:published_time" content="2020-05-21T13:47:23.000Z">
+<meta property="article:modified_time" content="2020-05-21T13:49:46.353Z">
+<meta property="article:author" content="NonCover">
+<meta property="article:tag" content="线段树">
+<meta property="article:tag" content="回溯法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://media.lock2016.xyz/img/%E6%8D%95%E8%8E%B7.PNG">
+    
+        <link rel="alternate" type="application/atom+xml" title="noc的手记" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=3.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"  class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">NonCover</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/about"  >
+                    <i class="icon icon-lg icon-smile-o"></i>
+                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+      <div class="nav2">
+          
+	      <a class="nav2item" data-title="Email" href="mailto:3471949741@qq.com" target="_parent"title="Email" >	
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+	      <a class="nav2item" data-title="Github" href="https://github.com/NonCover" target="_blank"title="Github" >	
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+	      <a class="nav2item" data-title="欢迎关注公众号" href="jacascript:;" id="wechat_icon" title="欢迎关注公众号" >	
+                <i class="icon icon-lg icon-weixin weixin"></i>
+              </a>
+          
+
+            </div>
+        
+      </ul>
+        
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">线段树真的很好写</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#线段树是什么？"><span class="post-toc-number">1.</span> <span class="post-toc-text">线段树是什么？</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#敌兵布阵"><span class="post-toc-number">2.</span> <span class="post-toc-text">敌兵布阵</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#构造线段树"><span class="post-toc-number">3.</span> <span class="post-toc-text">构造线段树</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#通过线段树求和"><span class="post-toc-number">4.</span> <span class="post-toc-text">通过线段树求和</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#写在后面"><span class="post-toc-number">5.</span> <span class="post-toc-text">写在后面</span></a></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-线段树真的很好写"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">线段树真的很好写</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2020-05-21 21:47:23" datetime="2020-05-21T13:47:23.000Z"  itemprop="datePublished">2020-05-21</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">11</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="线段树是什么？"><a href="#线段树是什么？" class="headerlink" title="线段树是什么？"></a>线段树是什么？</h1><p>首先，应该明确线段树是一种数据结构，而不是算法，其次线段树能够很有效的解决数组上一些问题，所以在用线段树的时候，我们要明确在哪些地方用，以及用在什么地方。说得更加具体一点，例如说有一个数组[1, 3, 5, 7, 9]，我们想要求下标从1到4的和，按照正常思路，我们遍历一遍数组，用一个变量来保存求和结果，只需要O（N）的时间复杂度就能够求出来了，这也许很快，但还不够快，至少在线段树面前，那么线段树能够做到什么程度？线段树能够只花费<strong>对数级</strong>的时间复杂度O（logN）求出来，至于如何做到，接着往下看。</p>
+<h1 id="敌兵布阵"><a href="#敌兵布阵" class="headerlink" title="敌兵布阵"></a><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1166" target="_blank" rel="noopener">敌兵布阵</a></h1><blockquote>
+<p>标题可以点击</p>
+</blockquote>
+<p>先来看一下这道经典题目描述：</p>
+<p><strong>C国的死对头A国这段时间正在进行军事演习，所以C国间谍头子Derek和他手下Tidy又开始忙乎了。A国在海岸线沿直线布置了N个工兵营地,Derek和Tidy的任务就是要监视这些工兵营地的活动情况。由于采取了某种先进的监测手段，所以每个工兵营地的人数C国都掌握的一清二楚,每个工兵营地的人数都有可能发生变动，可能增加或减少若干人手,但这些都逃不过C国的监视。</strong><br><strong>中央情报局要研究敌人究竟演习什么战术,所以Tidy要随时向Derek汇报某一段连续的工兵营地一共有多少人,例如Derek问:“Tidy,马上汇报第3个营地到第10个营地共有多少人!”Tidy就要马上开始计算这一段的总人数并汇报。但敌兵营地的人数经常变动，而Derek每次询问的段都不一样，所以Tidy不得不每次都一个一个营地的去数，很快就精疲力尽了，Derek对Tidy的计算速度越来越不满:”你个死肥仔，算得这么慢，我炒你鱿鱼!”Tidy想：“你自己来算算看，这可真是一项累人的工作!我恨不得你炒我鱿鱼呢!”无奈之下，Tidy只好打电话向计算机专家Windbreaker求救,Windbreaker说：“死肥仔，叫你平时做多点acm题和看多点算法书，现在尝到苦果了吧!”Tidy说：”我知错了。。。”但Windbreaker已经挂掉电话了。Tidy很苦恼，这么算他真的会崩溃的，聪明的读者，你能写个程序帮他完成这项工作吗？不过如果你的程序效率不够高的话，Tidy还是会受到Derek的责骂的.</strong></p>
+<p>可能看完后，你很快就能够写出代码来，但你的代码也许跟tidy的代码是一样的，线性搜索每一个营地，然后汇报给Derek，当你得出结果的时候，也许敌人已经快打到家门口了，所以我们需要精确的求出答案，并且要快速。在这道题面前线段树就起作用了。</p>
+<h1 id="构造线段树"><a href="#构造线段树" class="headerlink" title="构造线段树"></a>构造线段树</h1><p>在看上面的题，我们假设有5个营地，每个营地有若干个人，每个营地的编号从0 - 4。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://media.lock2016.xyz/img/捕获.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>很明显这是一个数组，并不是线段树，我们需要做的就是把这个数组转换成线段树。那么问题关键就是如何构造呢？</p>
+<p>我们先来看一组数据:</p>
+<ol>
+<li>arr[0, 4] = 25</li>
+<li>arr[0, 2] = 9, arr[3, 4] = 16</li>
+<li>arr[0, 1] = 4, arr[2] = 5, arr[3] = 7, arr[4] = 9</li>
+<li>arr[0] = 1, arr[1] = 3</li>
+</ol>
+<p>上面的数据已经看出了树的特征了，我们还是直接看图吧。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://media.lock2016.xyz/img/1.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>这张图片所代表的就是一个线段树，将一个数组分成两份，然后再从每份中继续分下去，我们可以看到其实这个线段树的叶子从左到右就是数组，最关键的如何用代码构造这个线段树，因为用到了树，肯定会用回溯法，那么，我们再来思考一个问题，我们真的需要去构造一个树吗？其实不用，上面这个树其实已经是一颗完全二叉树，我们可以用数组去表示这个树，<strong>tree = {25, 9, 16, 4, 5, 7, 9, 1, 3, 0}</strong>，比较了解树状数组的同学其实就可以知道，在<strong>tree</strong>数组中，对于一个节点<strong>tree[i]（i ∈[0…tree.size()]）</strong>,它的左子树等于<strong>tree[2 * i + 1]</strong>, 右子树等于<strong>tree[2 * i + 2]</strong>, 需要注意的是，如果2 * i + 1超过了数组大小，说明i节点已经是叶子了。方便各位理解，我把上面线段树用下标标记一下。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://media.lock2016.xyz/img/3.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>如果你能看到这里，恭喜你又掌握了一种数据结构，下面最关键的就是用代码来构造一个线段树了。</p>
+<p>关于如何构造我不去细讲，因为这真的是回溯法的事，解释都在注释里了。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  构造线段树 回溯</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> arr 数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> tree 线段树</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> node 当前节点</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> start 开始位置</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> end 结束为止</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">buidTree</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span>[] tree, <span class="keyword">int</span> node, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>{</span><br><span class="line">    <span class="keyword">if</span> (start == end) tree[node] = arr[start];  <span class="comment">// 到叶子节点了，写入到线段树中， 回溯</span></span><br><span class="line">    <span class="keyword">else</span> {</span><br><span class="line">        <span class="keyword">int</span> mid = (start + end) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> left_node = <span class="number">2</span> * node + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> right_node = <span class="number">2</span> * node + <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将数组一分为二，从中间分</span></span><br><span class="line">        buidTree(arr, tree, left_node, start, mid); <span class="comment">// 左子树</span></span><br><span class="line">        buidTree(arr, tree, right_node, mid + <span class="number">1</span>, end); <span class="comment">// 右子树</span></span><br><span class="line">        <span class="comment">// 一个节点一定等于它的左右子树之和，这里回溯</span></span><br><span class="line">        tree[node] = tree[left_node] + tree[right_node];</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>打印出来的tree数组如下：</p>
+<blockquote>
+<p>[25, 9, 16, 4, 5, 7, 9, 1, 3, 0]</p>
+</blockquote>
+<p>还有，我要解释一点，如果我们要把一个数组构造成线段树，往往我们是不知道究竟会有多少个节点，所以我们一般定义一个常量，这个常量一定要满足你所能够构造的最大数组的线段树，当然我这儿只是一个base  case，方便各位理解。</p>
+<p>构造线段树很简单吧，可是上题中，我们每个营地中的人数是会改变的，所以我们还会有一个方法用来修改值。</p>
+<p>看下面这张图片，</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://media.lock2016.xyz/img/4.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>红框里的节点，其实就是我们对应的营地人数，比如说我们想要修改1号营地的人数，修改成只有2个人。</p>
+<p>我们照例用图片来看一下修改过程：</p>
+<p>首先，我们先找到需要修改的值，将其修改。至于如何去找？这个问题问的好，我们想要找到1号营地所在位置，其实就是找下图中对应<strong>[1]</strong>所在的位置，我们可以通过<strong>二分法</strong>去找。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://media.lock2016.xyz/img/5.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>然后依次修改对应的父节点的值，通过回溯法一层一层的修改，其实和buildTree方法差不多。</p>
+<p>先用几张图片模拟一下修改过程，方便理解</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://media.lock2016.xyz/img/6.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://media.lock2016.xyz/img/7.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://media.lock2016.xyz/img/8.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>更新节点的算法Java代码如下，我们需要理解的就是注释的部分。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> idx 修改arr数组对应的值</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> newVal 修改的新值</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span>[] tree, <span class="keyword">int</span> node, <span class="keyword">int</span> start, <span class="keyword">int</span> end, <span class="keyword">int</span> idx, <span class="keyword">int</span> newVal)</span> </span>{</span><br><span class="line">     <span class="keyword">if</span> (start == end) {	<span class="comment">// 找到需要修改的节点</span></span><br><span class="line">         arr[idx] = newVal;</span><br><span class="line">         tree[node] = newVal;	<span class="comment">// node对应线段树需要修改的位置</span></span><br><span class="line">     } <span class="keyword">else</span> {</span><br><span class="line">         <span class="keyword">int</span> mid = (start + end) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">         <span class="keyword">int</span> left_node = <span class="number">2</span> * node + <span class="number">1</span>;</span><br><span class="line">         <span class="keyword">int</span> right_node = <span class="number">2</span> * node + <span class="number">2</span>;</span><br><span class="line">         <span class="comment">// 二分搜索,idx在mid的左边还是右边</span></span><br><span class="line">         <span class="keyword">if</span> (idx &gt;= start &amp;&amp; idx &lt;= mid) {	</span><br><span class="line">             update(arr, tree, left_node, start, mid, idx, newVal);</span><br><span class="line">         }</span><br><span class="line">         <span class="keyword">else</span> {</span><br><span class="line">             update(arr, tree, right_node, mid + <span class="number">1</span>, end, idx, newVal);</span><br><span class="line">         }</span><br><span class="line">         <span class="comment">// 修改父节点</span></span><br><span class="line">         tree[node] = tree[left_node] + tree[right_node];</span><br><span class="line">     }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>输出如下：</p>
+<blockquote>
+<p>修改前：[25, 9, 16, 4, 5, 7, 9, 1, 3, 0]<br>修改后：[24, 8, 16, 3, 5, 7, 9, 1, 2, 0]</p>
+</blockquote>
+<p>整体思路如下：</p>
+<ul>
+<li>通过二分法找到线段树中的节点修改其值</li>
+<li>回溯之前的状态，修改其父节点</li>
+</ul>
+<p>如果你能看到这儿，你问题基本上解决一半了，接下来就是最重要的内容了，也就是，我们如何将对数组的求和算法从O(N)降到O(log N)。相信很多人已经知道答案了，就是写不出代码了，没事我们一步一步来，先解决一些其他问题。</p>
+<h1 id="通过线段树求和"><a href="#通过线段树求和" class="headerlink" title="通过线段树求和"></a>通过线段树求和</h1><p>如果Derek想要我报告0到4号营地人数，0到3号营地人数，我们通过线段树很快都能找到答案，可如果Derek想要我们报告2到3号营地的人数，可是上图线段树中并没有这个线段该咋办？</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://media.lock2016.xyz/img/9.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>我们想求<strong>[2, 3]</strong>的总和，可是线段树中并没有这个线段，只有线段<strong>[2]</strong>和<strong>[3]</strong>的和，其实很明显，我们根本没必要去找<strong>[2, 3]</strong>，我们只需关注<strong>[2]</strong>和<strong>[3]</strong>就行了，找到后将两者加起来就行了。包括求<strong>[0, 4]</strong>也是一样，不必关系<strong>[0, 4]</strong>，只关心<strong>[0, 2]</strong>和<strong>[3, 4]</strong>，依次类推就行了，分而治之的思想有点在里面。至于为什么复杂度是O(logN)？那么为什么呢？因为网上这么说的，哈哈，别打我，我是真的有认真研究《算法4》这本书，其实我们求和不用像传统方法来遍历整个数组，因为线段树将数组分成了很多个区间，我们只需要去找特定的区间就行了。</p>
+<p>话不多说，上代码：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span>[] tree, <span class="keyword">int</span> node, <span class="keyword">int</span> start, <span class="keyword">int</span> end, <span class="keyword">int</span> L, <span class="keyword">int</span> R)</span> </span>{</span><br><span class="line">    <span class="comment">// 这里相当于状态剪枝，因为我们没必要去找所有节点</span></span><br><span class="line">    <span class="comment">// 例如我们求[2, 3]的时候，如果没有这个判断，它会去找[0, 1]或者其他没用的区间</span></span><br><span class="line">    <span class="keyword">if</span> (node &lt; L || node &gt; R) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 找到了此区间，返回此区间的和</span></span><br><span class="line">    <span class="keyword">if</span> (start == end) <span class="keyword">return</span> tree[node];</span><br><span class="line">    <span class="keyword">else</span> {</span><br><span class="line">        <span class="keyword">int</span> mid = (start + end) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> left_node = <span class="number">2</span> * node + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> right_node = <span class="number">2</span> * node + <span class="number">2</span>;</span><br><span class="line">        <span class="comment">// 从左子树去找</span></span><br><span class="line">        <span class="keyword">int</span> left_sum = query(arr, tree, left_node, start, mid, L, R);</span><br><span class="line">        <span class="comment">// 从右子树去找</span></span><br><span class="line">        <span class="keyword">int</span> right_sum = query(arr, tree, right_node, mid + <span class="number">1</span>, end, L, R);</span><br><span class="line">        <span class="keyword">return</span> left_sum + right_sum;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>线段树的更新、计算、构造全部说完了，不过说到这里，我还是有必要啰嗦一句，上面的题感兴趣的可以去原网站做一下，是一道很经典的题目，但是在实际开发当中，线段树用的好很牛逼，用的不好就是一个坑，对于一个指定大小的数组，我们求它的线段树也是固定大小的，数组大小更是不可能改变，因为这会导致程序出现overflow的bug。当然这样也限制了线段树，虽然线段树在对数组进行区间访问和修改数组的时候效率很高，但却不能够改编数组的大小，也就是增删数据。</p>
+<p>完整代码的话，可以关注一下我的<a href="https://github.com/NonCover/Algorithms/tree/master/%E7%BA%BF%E6%AE%B5%E6%A0%91/%E7%BA%BF%E6%AE%B5%E6%A0%91" target="_blank" rel="noopener">github</a>仓库，说实话这代码我写的是真的丑，因为方法的参数太多，导致代码冗余了，arr和tree完全可以设置成全局变量，感兴趣的可以自己琢磨把代码封装成类。</p>
+<p>另外，欢迎大佬指出其中的错误</p>
+<h1 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h1><p>其实对于数据结构和算法，我也有自己的理解，我研究这东西包括在网上刷题已有一年多的时间，我也总结出了自己的一套东西，当然也借鉴了许多大佬的知识。</p>
+<p>不过算法这东西的好坏完全依赖于数据结构的使用，比如拿线段树说事，设计出线段树这一数据结构，就是为了解决某种算法上的问题，但线段树并不是算法，它是存储数据的一种结构，而我们如何高效的对数据进行增删改查，这才是算法做的事，算法的背后就是数学，只是依赖于数据结构表现出来而已。</p>
+<p>另外为了一点私心，我做一下宣传吧，有兴趣的可以关注一下我的微信公众号：<strong>NonCover</strong>。另外还有我的<a href="https://blog.csdn.net/weixin_44905889" target="_blank" rel="noopener">CSDN</a>。</p>
+<p>撒花。。。。。下次见</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-05-21T13:49:46.353Z" itemprop="dateUpdated">2020-05-21 21:49:46</time>
+</span>
+
+
+        
+        原文链接：<a href="/2020/05/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9C%9F%E7%9A%84%E5%BE%88%E5%A5%BD%E5%86%99/" target="_blank" rel="external">https://noncover.github.io/2020/05/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9C%9F%E7%9A%84%E5%BE%88%E5%A5%BD%E5%86%99/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://NonCover.github.io'">
+            <img src="/img/avatar.jpg" alt="NonCover">
+            <a>NonCover</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E6%B3%95/" rel="tag">回溯法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/" rel="tag">线段树</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://noncover.github.io/2020/05/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9C%9F%E7%9A%84%E5%BE%88%E5%A5%BD%E5%86%99/&title=《线段树真的很好写》 — noc的手记&pic=https://NonCover.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://noncover.github.io/2020/05/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9C%9F%E7%9A%84%E5%BE%88%E5%A5%BD%E5%86%99/&title=《线段树真的很好写》 — noc的手记&source=记录在学习道路上以及生活上的一些收获" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://noncover.github.io/2020/05/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9C%9F%E7%9A%84%E5%BE%88%E5%A5%BD%E5%86%99/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《线段树真的很好写》 — noc的手记&url=https://noncover.github.io/2020/05/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9C%9F%E7%9A%84%E5%BE%88%E5%A5%BD%E5%86%99/&via=https://NonCover.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://noncover.github.io/2020/05/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9C%9F%E7%9A%84%E5%BE%88%E5%A5%BD%E5%86%99/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/05/18/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F%E7%9C%9F%E7%9A%84%E5%BE%88%E7%AE%80%E5%8D%95/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：拓扑排序真的很简单">下一篇：拓扑排序真的很简单</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: '',
+            repo: '',
+            oauth: {
+                client_id: '',
+                client_secret: '',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+    
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: '',
+            clientSecret: '',
+            repo: '',
+            owner: '',
+            admin: ['']
+        });
+        gitalk.render('gitalk-container');
+    </script>
+</section>
+
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2016
+            <i class="icon icon-lg icon-heart"></i>
+            <a href="https://NonCover.github.io">lock2016</a>
+            <br/>
+            Power by
+            <a href="https://hexo.io/" target="_blank" rel="external nofollow">Hexo</a>&nbsp;·&nbsp;
+            Theme
+            <a class="tomotoeslink" href="https://github.com/tomotoes/hexo-theme-tomotoes/" target="_blank" rel="external nofollow">tomotoes</a>
+        </span>
+
+        <br/>
+
+        <span id="RunTime" style="color:#a7a7a2;"></span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+
+        </span>
+        <br/>
+
+        <span class="license">This blog is licensed under a <a rel="license noopener" rel="external nofollow noopener" href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>.</span>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>为五斗米折腰(支付宝)</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/img/alipay.png" alt="打赏二维码">
+        </div>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div id="wechat" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h4 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>欢迎关注微信公众号！</span>
+        <i class="icon icon-quote-right"></i>
+    </h4>
+    <img id="wechat_img" data-img="/img/wechat.jpg" alt="欢迎您的关注！">
+</div>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://noncover.github.io/2020/05/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9C%9F%E7%9A%84%E5%BE%88%E5%A5%BD%E5%86%99/&title=《线段树真的很好写》 — noc的手记&pic=https://NonCover.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://noncover.github.io/2020/05/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9C%9F%E7%9A%84%E5%BE%88%E5%A5%BD%E5%86%99/&title=《线段树真的很好写》 — noc的手记&source=记录在学习道路上以及生活上的一些收获" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://noncover.github.io/2020/05/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9C%9F%E7%9A%84%E5%BE%88%E5%A5%BD%E5%86%99/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《线段树真的很好写》 — noc的手记&url=https://noncover.github.io/2020/05/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9C%9F%E7%9A%84%E5%BE%88%E5%A5%BD%E5%86%99/&via=https://NonCover.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://noncover.github.io/2020/05/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9C%9F%E7%9A%84%E5%BE%88%E5%A5%BD%E5%86%99/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://noncover.github.io/2020/05/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9C%9F%E7%9A%84%E5%BE%88%E5%A5%BD%E5%86%99/" alt="微信分享二维码">
+</div>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?77018fff337dacf0c04f32a378791855";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=3.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=3.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=3.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2020/4/24");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: ""
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "NonCover");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+		console.log("\n %c 一个坏掉的番茄 %c  © Simon Ma  http://tomotoes.com \n\n", "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;", "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;");
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+</body>
+</html>
