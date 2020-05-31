@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://noncover.github.io/"/>
-  <updated>2020-05-21T13:49:46.353Z</updated>
+  <updated>2020-05-31T11:51:37.470Z</updated>
   <id>https://noncover.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数字范围按位与</title>
+    <link href="https://noncover.github.io/2020/05/31/%E6%95%B0%E5%AD%97%E8%8C%83%E5%9B%B4%E6%8C%89%E4%BD%8D%E4%B8%8E/"/>
+    <id>https://noncover.github.io/2020/05/31/%E6%95%B0%E5%AD%97%E8%8C%83%E5%9B%B4%E6%8C%89%E4%BD%8D%E4%B8%8E/</id>
+    <published>2020-05-31T11:49:42.000Z</published>
+    <updated>2020-05-31T11:51:37.470Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>给定一个范围[m, n] 0 &lt;= m, n &lt;= 2147483647，返回此闭区间内的所有数字进行与运算后的结果。</p><p>这是一道leetcode上的经典题目，下面我将介绍两种解法，当然有兴趣的可以去<a href="https://leetcode-cn.com/problems/bitwise-and-of-numbers-range/" target="_blank" rel="noopener">原网站看一下具体题目和官方解答。</a></p><h1 id="常规解法"><a href="#常规解法" class="headerlink" title="常规解法"></a>常规解法</h1><p>这种解法是最简单的，包括我一开始也是这样做的。</p><p>具体代码如下:</p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">rangeBitwiseAnd</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>{</span><br><span class="line">        <span class="keyword">int</span> ans = m;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = m; i &lt;= n; ++i)</span><br><span class="line">            ans = ans &amp; i;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure><p>时间复杂度为O(N)，leetcode的编译器是通不过这个复杂度的。何况题目难度为medium，题目要求肯定不会让我们这么。</p><p>另外，如果有不了解位运算的，可以看一下我的另一篇博客<a href="http://lock2016.xyz/blog/article/13" target="_blank" rel="noopener">《位运算知识点总结》</a>。</p><h1 id="解法一"><a href="#解法一" class="headerlink" title="解法一"></a>解法一</h1><p>我们先观察9到12的二进制。</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="http://media.lock2016.xyz/img/11.PNG" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><p>当我们进行与运算的时候，要想成立， 所有位必须为 <strong>1</strong> ，反之，如果有一数上的对应位为 <strong>0</strong> 的话，计算的结果肯定为 <strong>0</strong> 。再观察上面每一个数的二进制，他们的二进制一定有一个公共前缀（黄色标注）。</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="http://media.lock2016.xyz/img/12.PNG" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><p>这个公共前缀的与运算一定是等于这个公共前缀的。</p><p>而任意两个数的与运算，除了公共前缀之外，它的后缀进行与运算的话一定是等于0的，大家不妨拿上笔多试几个数可以发现这个规律。</p><p>所以！！这道题由计算它的与运算，转向找到它的公公前缀后就可以得到答案了。</p><p>如何计算，在看完代码后，大家一定能够知道。</p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">rangeBitwiseAnd</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>{</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>; <span class="comment">// 用来记录左移了几位</span></span><br><span class="line">        <span class="keyword">while</span> (m != n) {</span><br><span class="line">             m &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">             n &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">             ans += <span class="number">1</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">// 还原</span></span><br><span class="line">        <span class="keyword">return</span> m &lt;&lt; ans;</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure><p>时间复杂度为O(1)，因为我们只用了常数级的数据来计算公共前缀</p><h1 id="解法二"><a href="#解法二" class="headerlink" title="解法二"></a>解法二</h1><p>此解法，我就简单讲一下了，我们在进行计算的时候，实则其实就找到两个数的公共前缀就行了，然后向左移位，就把后缀全部变成0了。</p><p>其实还有一种解法，我们可以把二进制最右边的1变成0。</p><p><code>n = n &amp; (n - 1)</code>，这个公式就可以把我们一个数的二进制最右边的1变成0，具体可以结合上面的图片思考。</p><p>我们参考上面的数据，要计算 9 到 12 的所有数的与运算，其实就是把 12 的 二进制右边的 1 不断的变成 0 ，直到其二进制成为<code>0000 1000</code>，此时肯定比 9 小，那么我们就可以退出循环了，然后将 9 与 <code>0000 1000</code>进行与运算就得到答案了，其实我们不断的把 12 右边第一个 1 变成 0 的过程，就是在求公共前缀。</p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">rangeBitwiseAnd</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>{</span><br><span class="line">        <span class="keyword">while</span> (m &lt; n) {<span class="comment">// 当 m = n 或者 大于 n的时候，就说明找到了公共前缀了</span></span><br><span class="line">            n = n &amp; (n - <span class="number">1</span>);    <span class="comment">// 让n最右边的1变成0</span></span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> n &amp; m;</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure><p>时间复杂度O(1)</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot; title=&quot;题目描述&quot;&gt;&lt;/a&gt;题目描述&lt;/h1&gt;&lt;p&gt;给定一个范围[m, n] 0 &amp;lt;= m, n &amp;lt;= 2147483647，返回此闭区间内的所有数字进行与运算后的
+      
+    
+    </summary>
+    
+    
+      <category term="力扣" scheme="https://NonCover.github.io/categories/%E5%8A%9B%E6%89%A3/"/>
+    
+    
+      <category term="位运算" scheme="https://NonCover.github.io/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/"/>
+    
+      <category term="leetcode" scheme="https://NonCover.github.io/tags/leetcode/"/>
+    
+  </entry>
   
   <entry>
     <title>线段树真的很好写</title>
